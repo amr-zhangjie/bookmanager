@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static '/plugins/bootstrap-3.3.7-dist/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% get_static_prefix %}css/dsb.css">
+</head>
+
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">图书管理系统</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">Dashboard</a></li>
+                <li><a href="#">Settings</a></li>
+                <li><a href="#">Profile</a></li>
+                <li><a href="#">Help</a></li>
+            </ul>
+            <form class="navbar-form navbar-right">
+                <input type="text" class="form-control" placeholder="Search...">
+            </form>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+            <ul class="nav nav-sidebar">
+                <li class="{% block selectedPublish %}active{% endblock %}"><a href="/publish_list">出版社列表 <span
+                        class="sr-only">(current)</span></a></li>
+                <li class="{% block selectedBook %}{% endblock %}"><a href="/book_list">书籍列表 <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="{% block selectedAuthor %}{% endblock %}"><a href="/author_list">作者列表<span class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            {% block main %}
+                <h2 class="sub-header">出版社列表</h2>
+                <a class="btn btn-primary btn-sm" href="/publish_add/">新增</a>
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                        <tr>
+                            <th>序号</th>
+                            <th>id</th>
+                            <th>出版社名字</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for i in all_publishers %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ i.pk }}</td>
+                                <td>{{ i.name }}</td>
+                                <td><a class="btn btn-danger btn-sm" href='/publish_del/?pk={{ i.pk }}'>删除</a>
+                                    <a class="btn btn-primary btn-sm " href='/publish_edit/?pk={{ i.pk }}'>编辑</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% load mytags %}
+                {% pagination 6 %}
+            {% endblock %}
+        </div>
+    </div>
+</div>
+
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</body>
+
+{#<body>#}
+{#<a href="/publish_add/">new</a>#}
+{#<table border="1">#}
+{#    <thead>#}
+{#        <tr>#}
+{#            <th>序号</th>#}
+{#            <th>id</th>#}
+{#            <th>出版社名字</th>#}
+{#            <th>操作</th>#}
+{#        </tr>#}
+{#    </thead>#}
+{#    <tbody>#}
+{#    {% for i in all_publishers %}#}
+{#            <tr>#}
+{#                <td>{{ forloop.counter }}</td>#}
+{#                <td>{{ i.pk }}</td>#}
+{#                <td>{{ i.name }}</td>#}
+{#                <td><a href = '/publish_del/?pk={{ i.pk }}'>删除</a>#}
+{#                <a href = '/publish_edit/?pk={{ i.pk }}'>编辑</a></td>#}
+{#            </tr>#}
+{#    {% endfor %}#}
+{#    </tbody>#}
+{#</table>#}
+{##}
+{#</body>#}
+</html>

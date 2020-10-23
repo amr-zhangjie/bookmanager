@@ -1,0 +1,37 @@
+{% extends 'publish_list.html' %}
+{% block selectedAuthor %}active{% endblock %}
+{% block selectedPublish %}{% endblock %}
+{% block main %}
+    <h2 class="sub-header">作者列表</h2>
+    <a class="btn btn-primary btn-sm" href="/publish_add/">新增</a>
+    <table class="table table-striped table-hover">
+
+        <thead>
+        <tr>
+            <th>序号</th>
+            <th>ID</th>
+            <th>姓名</th>
+            <th>代表作</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for author in all_authors %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ author.pk }}</td>
+                <td>{{ author.name }}</td>
+                <td>
+                    {% for book in author.books.all %}
+                        < {{ book.name }} >
+                    {% endfor %}
+                </td>
+                <td>
+                    <a class="btn btn-danger btn-sm" href="/author_del/?id={{ author.pk }}">删除</a>
+                    <a class="btn btn-primary btn-sm" href="/author_edit/?id={{ author.pk }}">编辑</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
